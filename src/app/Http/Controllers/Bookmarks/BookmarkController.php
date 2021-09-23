@@ -22,6 +22,9 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
 
+use App\Lib\LinkPreview\MockLinkPreview;
+use App\Lib\LinkPreview\LinkPreview;
+
 use App\Bookmark\UseCase\ShowBookmarkListPageUseCase;
 use App\Http\Requests\CreateBookmarkRequest;
 
@@ -127,7 +130,7 @@ class BookmarkController extends Controller
      */
     public function create(CreateBookmarkRequest $request)
     {
-        $useCase = new CreateBookmarkUseCase();
+        $useCase = new CreateBookmarkUseCase(new MockLinkPreview());
         $useCase->handle($request->url, $request->category, $request->comment);
 
         // 暫定的に成功時は一覧ページへ
